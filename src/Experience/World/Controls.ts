@@ -33,10 +33,10 @@ export class Controls {
 
   public setPath() {
     this.curve = new THREE.CatmullRomCurve3([
-      new THREE.Vector3(-5, 0, 0),
-      new THREE.Vector3(0, 0, -5),
-      new THREE.Vector3(5, 0, 0),
-      new THREE.Vector3(5, 0, 5),
+      new THREE.Vector3(-5, 2, 0),
+      new THREE.Vector3(0, 2, -5),
+      new THREE.Vector3(5, 2, 0),
+      new THREE.Vector3(5, 2, 5),
     ], true);
 
     const points = this.curve.getPoints(50);
@@ -60,15 +60,21 @@ export class Controls {
 
   public update() {
     const nextVector = new THREE.Vector3(0, 0, 0);
-    let lookAtPosition = new THREE.Vector3(0, 0, 0);
-
+    const lookAheadVector = new THREE.Vector3(0, 0, 0);
     this.lerp.current = GSAP.utils.interpolate(this.lerp.current, this.lerp.target, this.lerp.ease);
-    this.lerp.target = GSAP.utils.clamp(0, 1, this.lerp.target);
-    this.lerp.current = GSAP.utils.clamp(0, 1, this.lerp.current);
-
-    this.curve.getPointAt(this.lerp.current, nextVector);
-    this.curve.getPointAt(GSAP.utils.clamp(0, 1, this.lerp.current + 0.001), lookAtPosition);
+    this.curve.getPointAt(this.lerp.current % 1, nextVector);
+    this.curve.getPointAt((this.lerp.current + 0.0001) % 1, lookAheadVector);
     this.camera.orthoCamera.position.copy(nextVector);
-    this.camera.orthoCamera.lookAt(lookAtPosition);
+
+    const directionalVector = new THREE.Vector3(0, 0, 0);
+
+    directionalVector.subVectors(lookAheadVector, nextVector);
+
+    directionalVector.normalize();
+
+    const crossVector = new THREE.Vector3(0, 0, 0);
+    crossVector.crossVectors(directionalVector, new THREE.Vector3(0, 1, 0));
+    crossVector.multiplyScalar(100);
+    this.camera.orthoCamera.lookAt(0, 1, 0);
   }
 }

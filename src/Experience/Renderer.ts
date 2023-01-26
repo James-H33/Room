@@ -40,6 +40,15 @@ export class Renderer {
   }
 
   public update() {
+    // First Viewport Size
+    this.renderer.setViewport(0, 0, this.sizes.width, this.sizes.height);
+    this.renderer.render(this.scene, this.camera.orthoCamera);
+
+    // Second Viewport Size
+    this.renderer.setScissorTest(true);
+    this.renderer.setViewport(this.sizes.width * 0.65, this.sizes.height * 0.65, this.sizes.width * 0.35, this.sizes.height * 0.35);
+    this.renderer.setScissor(this.sizes.width * 0.65, this.sizes.height * 0.65, this.sizes.width * 0.35, this.sizes.height * 0.35);
     this.renderer.render(this.scene, this.camera.perspectiveCamera);
+    this.renderer.setScissorTest(false);
   }
 }
