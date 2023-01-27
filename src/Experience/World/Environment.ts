@@ -29,7 +29,7 @@ export class Environment {
     this.sunLight.position.set(-2, 7, 5);
     this.ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
 
-    const sunlightHelper = new THREE.CameraHelper(this.sunLight.shadow.camera);
+    // const sunlightHelper = new THREE.CameraHelper(this.sunLight.shadow.camera);
 
     // this.scene.add(sunlightHelper);
     this.scene.add(this.ambientLight);

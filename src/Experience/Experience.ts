@@ -7,8 +7,6 @@ import { Sizes } from "./Utils/Sizes";
 import { Time } from "./Utils/Time";
 import { World } from "./World/World";
 
-(window as any).MyGlobalExperience = null;
-
 export class Experience {
   public static instance: Experience;
   public canvas: any;
@@ -48,7 +46,5 @@ export class Experience {
         this.camera.resize();
         this.renderer.resize();
       });
-
-
   }
 }

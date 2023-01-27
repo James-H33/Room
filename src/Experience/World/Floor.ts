@@ -1,5 +1,4 @@
 import * as THREE from "three";
-import GSAP from "gsap";
 import { Experience } from "../Experience";
 import { Resources } from "../Utils/Resources";
 
@@ -20,10 +19,10 @@ export class Floor {
     this.room = this.resources.items.Room;
     this.roomScene = this.room.file.scene;
 
-    this.setFloor();
+    this.setMainFloor();
   }
 
-  public setFloor() {
+  public setMainFloor() {
     this.geometry = new THREE.PlaneGeometry(50, 50, 1, 1);
     this.material = new THREE.MeshStandardMaterial({
       color: 0xffffff,
@@ -31,7 +30,7 @@ export class Floor {
 
     this.plane = new THREE.Mesh(this.geometry, this.material);
     this.plane.receiveShadow = true;
-    this.plane.position.y = -0.2;
+    this.plane.position.y = -0.3;
     this.plane.rotation.x = -Math.PI * 0.5
     this.scene.add(this.plane);
   }

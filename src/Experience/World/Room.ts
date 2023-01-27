@@ -31,7 +31,6 @@ export class Room {
   public onMouseMove() {
     window.addEventListener('mousemove', (event: any) => {
       const x = ((event.clientX - window.innerWidth / 2) / window.innerWidth) * 2
-      const y = -1 * ((event.clientY - window.innerHeight / 2) / window.innerHeight) * 2
 
       this.lerp.target = x * 0.1;
     });

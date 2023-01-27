@@ -75,8 +75,8 @@ export class Camera {
     this.orthoCamera.updateProjectionMatrix();
   }
 
-  private addOrthoHelper() {
-    this.orthoHelper = new THREE.CameraHelper(this.orthoCamera);
-    this.scene.add(this.orthoHelper);
-  }
+  // private addOrthoHelper() {
+  //   this.orthoHelper = new THREE.CameraHelper(this.orthoCamera);
+  //   this.scene.add(this.orthoHelper);
+  // }
 }
