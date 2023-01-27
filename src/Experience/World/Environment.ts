@@ -15,8 +15,8 @@ export class Environment {
     this.resources = this.experience.resources;
 
     this.setSunlight();
-    this.setGrid();
-    this.setAxisHelper();
+    // this.setGrid();
+    // this.setAxisHelper();
   }
 
   public setSunlight() {
@@ -24,10 +24,10 @@ export class Environment {
     this.sunLight.position.set(0, 50, 0);
     this.sunLight.castShadow = true;
     this.sunLight.shadow.normalBias = 0.05;
-    this.sunLight.shadow.mapSize.width = 2048;
-    this.sunLight.shadow.mapSize.height = 2048;
-    this.sunLight.position.set(4, 7, 3);
-    this.ambientLight = new THREE.AmbientLight(0xffffff, 1);
+    this.sunLight.shadow.mapSize.width = 1024;
+    this.sunLight.shadow.mapSize.height = 1024;
+    this.sunLight.position.set(-2, 7, 5);
+    this.ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
 
     const sunlightHelper = new THREE.CameraHelper(this.sunLight.shadow.camera);
 
@@ -45,7 +45,7 @@ export class Environment {
   }
 
   public setAxisHelper() {
-    const axisHelper = new THREE.AxesHelper(5);
+    const axisHelper = new THREE.AxesHelper(8);
     this.scene.add(axisHelper);
   }
 }

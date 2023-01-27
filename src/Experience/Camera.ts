@@ -34,20 +34,13 @@ export class Camera {
   }
 
   public createOrthographicCamera() {
-    const frustumSize = this.sizes.frustrum;
-    const aspect = this.sizes.aspectRatio;
-
     this.orthoCamera = new THREE.OrthographicCamera();
 
-    this.orthoCamera.left = -((1.25 * frustumSize * aspect) / 2)
-    this.orthoCamera.right = (1.25 * frustumSize * aspect) / 2
-    this.orthoCamera.top = (frustumSize * aspect) / 2
-    this.orthoCamera.bottom = -(frustumSize * aspect) / 2
-    this.orthoCamera.near = -20
-    this.orthoCamera.far = 20;
+    this.updateOrthoCamera();
+    this.orthoCamera.position.set(0, 3, 5);
+    // this.orthoCamera.rotation.set(-0.65, 0, 0);
+    this.orthoCamera.lookAt(0, 1, 0);
 
-    this.orthoHelper = new THREE.CameraHelper(this.orthoCamera);
-    this.scene.add(this.orthoHelper);
     this.scene.add(this.orthoCamera);
   }
 
@@ -60,20 +53,30 @@ export class Camera {
   public resize() {
     this.perspectiveCamera.aspect = this.sizes.aspectRatio;
     this.perspectiveCamera.updateProjectionMatrix();
-
-    const frustrum = this.sizes.aspectRatio * this.sizes.frustrum;
-    this.orthoCamera.left = -((frustrum) / 2)
-    this.orthoCamera.right = (frustrum) / 2
-    this.orthoCamera.top = (frustrum) / 2
-    this.orthoCamera.bottom = -(frustrum) / 2
-    this.orthoCamera.updateProjectionMatrix();
+    this.updateOrthoCamera();
   }
 
   public update() {
     this.controls.update();
-    this.orthoHelper.matrixWorldNeedsUpdate = true;
-    this.orthoHelper.update();
-    this.orthoHelper.position.copy(this.orthoCamera.position);
-    this.orthoHelper.rotation.copy(this.orthoCamera.rotation);
+    // this.updateOrthoCamera();
+    // this.orthoHelper.matrixWorldNeedsUpdate = true;
+    // this.orthoHelper.update();
+    // this.orthoHelper.position.copy(this.orthoCamera.position);
+    // this.orthoHelper.rotation.copy(this.orthoCamera.rotation);
+  }
+
+  private updateOrthoCamera() {
+    this.orthoCamera.left = (-this.sizes.aspectRatio * this.sizes.frustrum) / 2;
+    this.orthoCamera.right =(this.sizes.aspectRatio * this.sizes.frustrum) / 2;
+    this.orthoCamera.top = this.sizes.frustrum / 2;
+    this.orthoCamera.bottom = -this.sizes.frustrum / 2;
+    this.orthoCamera.near = -20
+    this.orthoCamera.far = 20;
+    this.orthoCamera.updateProjectionMatrix();
+  }
+
+  private addOrthoHelper() {
+    this.orthoHelper = new THREE.CameraHelper(this.orthoCamera);
+    this.scene.add(this.orthoHelper);
   }
 }
