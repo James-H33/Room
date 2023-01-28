@@ -69,7 +69,7 @@ export class Resources {
       videoElement.autoplay = true;
       videoElement.muted = true;
       videoElement.loop = true;
-      videoElement.play();
+      // videoElement.play();
 
       const videoTexture = new THREE.VideoTexture(videoElement);
       videoTexture.flipY = true;

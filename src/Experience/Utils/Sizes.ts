@@ -13,7 +13,7 @@ export class Sizes {
     this.height = window.innerHeight;
     this.aspectRatio = this.width / this.height;
     this.pixelRatio = Math.min(window.devicePixelRatio, 2);
-    this.frustrum = 5;
+    this.frustrum = 8
 
     window.addEventListener("resize", this.onResize.bind(this));
   }

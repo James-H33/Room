@@ -4,6 +4,7 @@ import { Resources } from "../Utils/Resources";
 import { Sizes } from "../Utils/Sizes";
 import { Controls } from "./Controls";
 import { Environment } from "./Environment";
+import { Floor } from "./Floor";
 import { Room } from "./Room";
 
 export class World {
@@ -16,6 +17,7 @@ export class World {
   public resources!: Resources;
   public environment!: Environment;
   public controls!: Controls;
+  public floor!: Floor;
 
   constructor() {
     this.experience = new Experience();
@@ -30,6 +32,7 @@ export class World {
         console.log('Loaded!');
         this.environment = new Environment();
         this.room = new Room();
+        this.floor = new Floor();
         this.controls = new Controls();
       });
   }
