@@ -1,5 +1,7 @@
+import { take } from "rxjs";
 import * as THREE from "three";
 import { Camera } from "./Camera";
+import { Preloader } from "./Preloader";
 import { Renderer } from "./Renderer";
 import { assets } from "./Utils/assets";
 import { Resources } from "./Utils/Resources";
@@ -17,6 +19,7 @@ export class Experience {
   public time!: Time;
   public world!: World;
   public resources!: Resources;
+  public preloader!: Preloader;
 
   constructor(canvas?: any) {
     if (Experience.instance) {
@@ -25,6 +28,7 @@ export class Experience {
 
     Experience.instance = this;
 
+    this.preloader = new Preloader();
     this.canvas = canvas;
     this.scene = new THREE.Scene();
     this.sizes = new Sizes();
@@ -33,6 +37,12 @@ export class Experience {
     this.renderer = new Renderer();
     this.resources = new Resources(assets);
     this.world = new World();
+
+    this.resources.resourcesLoaded$
+      .pipe(take(1))
+      .subscribe(() => {
+        this.preloader.hide();
+      });
 
     this.time.update$
       .subscribe(() => {
