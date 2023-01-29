@@ -9,11 +9,11 @@ export class Preloader {
   }
 
   public hide() {
-    this.preloaderElementRef.classList.add('preloader--hide');
+    this.preloaderElementRef.classList.add('--hide');
 
     setTimeout(() => {
       this.preloaderElementRef.style.display = 'none';
-    }, 500);
+    }, 1000);
   }
 
   public show() {
