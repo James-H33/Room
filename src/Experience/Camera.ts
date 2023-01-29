@@ -20,9 +20,9 @@ export class Camera {
     this.scene = this.experience.scene;
     this.canvas = this.experience.canvas;
 
-    this.createPerspectiveCamera();
     this.createOrthographicCamera();
-    this.createOrbitalControls();
+    // this.createPerspectiveCamera();
+    // this.createOrbitalControls();
   }
 
   public createPerspectiveCamera() {
@@ -38,7 +38,6 @@ export class Camera {
 
     this.updateOrthoCamera();
     this.orthoCamera.position.set(0, 3, 5);
-    // this.orthoCamera.rotation.set(-0.65, 0, 0);
     this.orthoCamera.lookAt(0, 1, 0);
 
     this.scene.add(this.orthoCamera);
@@ -51,13 +50,14 @@ export class Camera {
   }
 
   public resize() {
-    this.perspectiveCamera.aspect = this.sizes.aspectRatio;
-    this.perspectiveCamera.updateProjectionMatrix();
+    // this.perspectiveCamera.aspect = this.sizes.aspectRatio;
+    // this.perspectiveCamera.updateProjectionMatrix();
     this.updateOrthoCamera();
+    this.orthoCamera.updateProjectionMatrix();
   }
 
   public update() {
-    this.controls.update();
+    // this.controls.update();
     // this.updateOrthoCamera();
     // this.orthoHelper.matrixWorldNeedsUpdate = true;
     // this.orthoHelper.update();
@@ -70,8 +70,8 @@ export class Camera {
     this.orthoCamera.right =(this.sizes.aspectRatio * this.sizes.frustrum) / 2;
     this.orthoCamera.top = this.sizes.frustrum / 2;
     this.orthoCamera.bottom = -this.sizes.frustrum / 2;
-    this.orthoCamera.near = -20
-    this.orthoCamera.far = 20;
+    this.orthoCamera.near = -30
+    this.orthoCamera.far = 30;
     this.orthoCamera.updateProjectionMatrix();
   }
 

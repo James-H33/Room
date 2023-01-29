@@ -50,6 +50,8 @@ export class Room {
       }
     });
 
+    this.roomScene.position.y = 0.5
+
     this.scene.add(this.roomScene);
   }
 

@@ -47,7 +47,7 @@ export class Experience {
     this.time.update$
       .subscribe(() => {
         this.world.update();
-        this.camera.update();
+        // this.camera.update();
         this.renderer.update();
       });
 

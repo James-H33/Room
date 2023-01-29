@@ -5,6 +5,7 @@ import { Experience } from "../Experience";
 import { Resources } from "../Utils/Resources";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ASScroll from '@ashthornton/asscroll'
+import { Environment } from "./Environment";
 
 export class Controls {
   public experience: Experience;
@@ -15,6 +16,8 @@ export class Controls {
   public sizes: any;
   public curve!: THREE.CatmullRomCurve3;
   public room!: any;
+  public floor!: any;
+  public environment!: Environment;
 
   constructor() {
     this.experience = new Experience();
@@ -23,6 +26,8 @@ export class Controls {
     this.camera = this.experience.camera;
     this.time = this.experience.time;
     this.sizes = this.experience.sizes;
+    this.environment = this.experience.world.environment;
+    this.floor = this.experience.world.floor;
     this.room = this.experience.world.room.roomScene
     GSAP.registerPlugin(ScrollTrigger)
 
@@ -54,25 +59,16 @@ export class Controls {
       }
     });
 
-    const circleGeometry = new THREE.CircleGeometry(5, 32);
-    const circleMaterial = new THREE.MeshStandardMaterial({
-      color: '#557ea2'
-    });
-
-    const circle1 = new THREE.Mesh(circleGeometry, circleMaterial);
-    circle1.receiveShadow = true;
-    circle1.position.y = -0.2;
-    circle1.rotation.x = -Math.PI * 0.5
-    circle1.scale.x = 0.1;
-    circle1.scale.y = 0.1;
-    circle1.scale.z = 0.1;
-
+    const circle1 = this.floor.transitionalFloors[0];
+    circle1.visible = true;
     this.scene.add(circle1);
+
+    const firstMoveXPos = () => this.sizes.aspectRatio * 2.25;
 
     firstTimeline.to(
       circle1.position,
       {
-        x: () => this.sizes.width * 0.0014
+        x: () => firstMoveXPos()
       },
       'id-1'
     );
@@ -80,9 +76,9 @@ export class Controls {
     firstTimeline.to(
       circle1.scale,
       {
-        x: () => 3.2,
-        y: () => 3.2,
-        z: () => 3.2,
+        x: () => 3.5,
+        y: () => 3.5,
+        z: () => 3.5,
       },
       'id-1'
     );
@@ -90,7 +86,7 @@ export class Controls {
     firstTimeline.to(
       this.room.position,
       {
-        x: () => this.sizes.width * 0.002
+        x: () => firstMoveXPos()
       },
       'id-1'
     );
@@ -102,18 +98,7 @@ export class Controls {
       }
     });
 
-    const circleMaterial2 = new THREE.MeshStandardMaterial({
-      color: 0xffffff
-    });
-    const circle2 = new THREE.Mesh(circleGeometry, circleMaterial2);
-    circle2.receiveShadow = true;
-    circle2.position.y = -0.18;
-    circle2.position.x = this.sizes.width * 0.002;
-    circle2.rotation.x = -Math.PI * 0.5;
-    circle2.scale.x = 0.1;
-    circle2.scale.y = 0.1;
-    circle2.scale.z = 0.1;
-    circle2.visible = false;
+    const circle2 = this.floor.transitionalFloors[1];
     this.scene.add(circle2);
 
     const timeLine = GSAP.timeline({
@@ -121,6 +106,7 @@ export class Controls {
         ...this.triggerConfig(".second-move"),
       },
       onStart: () => {
+        circle2.position.x = this.room.position.x;
         circle2.visible = true;
       },
       onReverseComplete: () => {
@@ -128,46 +114,38 @@ export class Controls {
       }
     });
 
-    timeLine.to({}, {});
+      timeLine.to({}, {});
 
-    secondTimeline.to(
-      circle2.position,
-      {
-        x: () => 0,
-        z: () => 0
-      },
-      'id-2'
-    );
+      secondTimeline.to(
+        circle2.scale,
+        {
+          x: () => 3.5,
+          y: () => 3.5,
+          z: () => 3.5,
+        },
+        'id-2'
+      )
 
+      secondTimeline.to(
+        this.room.position,
+        {
+          x: () => -(this.sizes.aspectRatio * 0.5),
+        },
+        'id-2'
+      );
 
-    secondTimeline.to(
-      circle2.scale,
-      {
-        x: () => 3.2,
-        y: () => 3.2,
-        z: () => 3.2,
-      },
-      'id-2'
-    )
+      secondTimeline.to(
+        this.room.scale,
+        {
+          x: () => 2,
+          y: () => 2,
+          z: () => 2,
+        },
+        'id-2'
+      );
 
-    secondTimeline.to(
-      this.room.position,
-      {
-        x: () => 0,
-        z: () => 0
-      },
-      'id-2'
-    );
-
-    secondTimeline.to(
-      this.room.scale,
-      {
-        x: () => 2,
-        y: () => 2,
-        z: () => 2,
-      },
-      'id-2'
-    );
+    const circle3 = this.floor.transitionalFloors[2];
+    this.scene.add(circle3);
 
     // Third Section
     const thirdTimeline = GSAP.timeline({
@@ -175,17 +153,37 @@ export class Controls {
         ...this.triggerConfig(".third-move"),
       },
       onStart: () => {
+        circle3.visible = true;
         this.resources.items['Screen'].elementRef.play();
       },
       onReverseComplete: () => {
+        circle3.visible = false;
         this.resources.items['Screen'].elementRef.pause();
       }
     });
 
     thirdTimeline.to(
+      circle3.position,
+      {
+        x: () => this.sizes.aspectRatio * 3,
+      },
+      'id-3'
+    );
+
+    thirdTimeline.to(
+      circle3.scale,
+      {
+        x: () => 3.5,
+        y: () => 3.5,
+        z: () => 3.5,
+      },
+      'id-3'
+    )
+
+    thirdTimeline.to(
       this.room.position,
       {
-        x: () => this.sizes.width * 0.0025,
+        x: () => this.sizes.aspectRatio * 3,
       },
       'id-3'
     );
@@ -220,7 +218,7 @@ export class Controls {
     secondTimeline.to(
       this.room.position,
       {
-        x: () => this.sizes.width * 0.0025,
+        x: () => -(this.sizes.aspectRatio * 3)
       },
       'id-2'
     );

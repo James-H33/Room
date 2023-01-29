@@ -29,7 +29,6 @@ export class World {
 
     this.resources.resourcesLoaded$
       .subscribe(() => {
-        console.log('Loaded!');
         this.environment = new Environment();
         this.room = new Room();
         this.floor = new Floor();
@@ -38,11 +37,12 @@ export class World {
   }
 
   public update() {
-    if (!this.room || !this.controls) {
+    if (!this.room || !this.controls || !this.environment) {
       return;
     }
 
-    this.controls.update();
+    // this.environment.update();
+    // this.controls.update();
     this.room.update();
   }
 }
