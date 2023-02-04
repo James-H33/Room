@@ -22,6 +22,7 @@ export class Environment {
     // this.setRaycaster();
     this.onMouseMove();
   }
+  
   public onMouseMove() {
     this.mouse = new THREE.Vector2();
     window.addEventListener('mousemove', (event: any) => {
@@ -37,7 +38,7 @@ export class Environment {
   }
 
   public setSunlight() {
-    this.sunLight = new THREE.DirectionalLight(0xffffff, 5);
+    this.sunLight = new THREE.DirectionalLight(0xffffff, 1);
     this.sunLight.castShadow = true;
     this.sunLight.shadow.normalBias = 0.05;
     this.sunLight.shadow.mapSize.width = 512 * 2;
@@ -49,7 +50,7 @@ export class Environment {
     this.sunLight.shadow.camera.top = 10;
     this.sunLight.shadow.camera.bottom = -10;
     this.sunLight.position.set(-2, 7, 5);
-    this.ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+    this.ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
 
     // const sunlightHelper = new THREE.CameraHelper(this.sunLight.shadow.camera);
 

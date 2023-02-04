@@ -42,9 +42,9 @@ export class Floor {
     const transitionalFloors = [];
     this.circleGeometry = new THREE.CircleGeometry(5, 32);
 
-    transitionalFloors.push(this.makeCircle('#121814', this.plane.position.y + 0.001))
+    transitionalFloors.push(this.makeCircle('#91a197', this.plane.position.y + 0.001))
     transitionalFloors.push(this.makeCircle('#6d6875', this.plane.position.y + 0.002))
-    transitionalFloors.push(this.makeCircle('#121814', this.plane.position.y + 0.003))
+    transitionalFloors.push(this.makeCircle('#91a197', this.plane.position.y + 0.003))
 
     this.transitionalFloors = transitionalFloors as any;
   }

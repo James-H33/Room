@@ -49,10 +49,15 @@ export class Controls {
 
       return () => { };
     });
+
+    mediaMatcher.add("all", () => {
+      this.allTriggers();
+
+      return () => { };
+    });
   }
 
-  public desktopTriggers() {
-    // First Section
+  public allTriggers() {
     const firstTimeline = GSAP.timeline({
       scrollTrigger: {
         ...this.triggerConfig(".first-move"),
@@ -83,25 +88,10 @@ export class Controls {
       'id-1'
     );
 
-    firstTimeline.to(
-      this.room.position,
-      {
-        x: () => firstMoveXPos()
-      },
-      'id-1'
-    );
-
-    // Second Section
-    const secondTimeline = GSAP.timeline({
-      scrollTrigger: {
-        ...this.triggerConfig(".second-move"),
-      }
-    });
-
     const circle2 = this.floor.transitionalFloors[1];
     this.scene.add(circle2);
 
-    const timeLine = GSAP.timeline({
+    const timeLine2 = GSAP.timeline({
       scrollTrigger: {
         ...this.triggerConfig(".second-move"),
       },
@@ -114,35 +104,15 @@ export class Controls {
       }
     });
 
-      timeLine.to({}, {});
-
-      secondTimeline.to(
-        circle2.scale,
-        {
-          x: () => 3.5,
-          y: () => 3.5,
-          z: () => 3.5,
-        },
-        'id-2'
-      )
-
-      secondTimeline.to(
-        this.room.position,
-        {
-          x: () => -(this.sizes.aspectRatio * 0.5),
-        },
-        'id-2'
-      );
-
-      secondTimeline.to(
-        this.room.scale,
-        {
-          x: () => 2,
-          y: () => 2,
-          z: () => 2,
-        },
-        'id-2'
-      );
+    timeLine2.to(
+      circle2.scale,
+      {
+        x: () => 3.5,
+        y: () => 3.5,
+        z: () => 3.5,
+      },
+      'id-1'
+    );
 
     const circle3 = this.floor.transitionalFloors[2];
     this.scene.add(circle3);
@@ -179,6 +149,61 @@ export class Controls {
       },
       'id-3'
     )
+
+  }
+
+  public desktopTriggers() {
+    // First Section
+    const firstTimeline = GSAP.timeline({
+      scrollTrigger: {
+        ...this.triggerConfig(".first-move"),
+      }
+    });
+
+    const firstMoveXPos = () => this.sizes.aspectRatio * 2.25;
+
+    firstTimeline.to(
+      this.room.position,
+      {
+        x: () => firstMoveXPos()
+      },
+      'id-1'
+    );
+
+    // Second Section
+    const secondTimeline = GSAP.timeline({
+      scrollTrigger: {
+        ...this.triggerConfig(".second-move"),
+      }
+    });
+
+    secondTimeline.to(
+      this.room.position,
+      {
+        x: () => -(this.sizes.aspectRatio * 0.5),
+      },
+      'id-2'
+    );
+
+    secondTimeline.to(
+      this.room.scale,
+      {
+        x: () => 2,
+        y: () => 2,
+        z: () => 2,
+      },
+      'id-2'
+    );
+
+    const circle3 = this.floor.transitionalFloors[2];
+    this.scene.add(circle3);
+
+    // Third Section
+    const thirdTimeline = GSAP.timeline({
+      scrollTrigger: {
+        ...this.triggerConfig(".third-move"),
+      }
+    });
 
     thirdTimeline.to(
       this.room.position,
@@ -218,7 +243,7 @@ export class Controls {
     secondTimeline.to(
       this.room.position,
       {
-        x: () => -(this.sizes.aspectRatio * 3)
+        x: () => (this.sizes.aspectRatio * 3)
       },
       'id-2'
     );
