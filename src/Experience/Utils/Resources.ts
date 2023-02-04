@@ -44,6 +44,7 @@ export class Resources {
   public setLoaders() {
     this.loaders = {}
     this.loaders.gltf = new GLTFLoader();
+    this.loaders.textureLoader = new THREE.TextureLoader();
     this.loaders.draco = new DRACOLoader();
     this.loaders.draco.setDecoderPath("/draco/");
     this.loaders.gltf.setDRACOLoader(this.loaders.draco);
@@ -80,6 +81,16 @@ export class Resources {
 
       this.items[asset.name] = { type: asset.type, elementRef: videoElement, file: videoTexture };
       this.onLoaded();
+    }
+
+    if (asset.type === 'jpg') {
+      this.loaders.textureLoader.load(asset.path, (file: any) => {
+        file.encoding = THREE.sRGBEncoding;
+        file.flipY = false;
+        
+        this.items[asset.name] = { type: asset.type, file }
+        this.onLoaded();
+      });
     }
   }
 
