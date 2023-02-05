@@ -46,7 +46,7 @@ export class Resources {
     this.loaders.gltf = new GLTFLoader();
     this.loaders.textureLoader = new THREE.TextureLoader();
     this.loaders.draco = new DRACOLoader();
-    this.loaders.draco.setDecoderPath("/draco/");
+    this.loaders.draco.setDecoderPath("draco/");
     this.loaders.gltf.setDRACOLoader(this.loaders.draco);
   }
 
